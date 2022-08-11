@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { Provider as AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 
 import Spacer from "../components/spacer";
 
 export default function LoginScreen({ navigation }: any) {
+    //@ts-ignore
+    const { login, state } = useContext(AuthContext);
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     return (

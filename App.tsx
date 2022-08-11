@@ -10,6 +10,8 @@ import PostScreen from './screens/PostScreen';
 import ProfilesScreen from './screens/ProfilesScreen';
 import RegisterScreen from './screens/RegisterScreen';
 
+import { Provider as AuthContext } from './context/AuthContext';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -18,26 +20,28 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <NavigationContainer>
-        {token === null ? (
-          <Stack.Navigator
-            screenOptions={({ route, navigation }) => ({
-              headerShown: false
-            })}
-          >
-            <Stack.Screen name='Register' component={RegisterScreen} />
-            <Stack.Screen name='Login' component={LoginScreen} />
-          </Stack.Navigator>
-        ) : (
-          <Tab.Navigator>
-            <Tab.Screen name='Home' component={HomeScreen} />
-            <Tab.Screen name='Profile' component={ProfileScreen} />
-            <Tab.Screen name='Profiles' component={ProfilesScreen} />
-            <Tab.Screen name='Post' component={PostScreen} />
-            <Tab.Screen name='CreatePost' component={CreatePostScreen} />
-          </Tab.Navigator>
-        )}
-      </NavigationContainer>
+      <AuthContext>
+        <NavigationContainer>
+          {token === null ? (
+            <Stack.Navigator
+              screenOptions={({ route, navigation }) => ({
+                headerShown: false
+              })}
+            >
+              <Stack.Screen name='Register' component={RegisterScreen} />
+              <Stack.Screen name='Login' component={LoginScreen} />
+            </Stack.Navigator>
+          ) : (
+            <Tab.Navigator>
+              <Tab.Screen name='Home' component={HomeScreen} />
+              <Tab.Screen name='Profile' component={ProfileScreen} />
+              <Tab.Screen name='Profiles' component={ProfilesScreen} />
+              <Tab.Screen name='Post' component={PostScreen} />
+              <Tab.Screen name='CreatePost' component={CreatePostScreen} />
+            </Tab.Navigator>
+          )}
+        </NavigationContainer>
+      </AuthContext>
     </SafeAreaProvider>
   );
 }
